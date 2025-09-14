@@ -1,0 +1,4 @@
+requests
+pytelegrambotapi
+beautifulsoup4
+tldextract
