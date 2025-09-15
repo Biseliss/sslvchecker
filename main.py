@@ -61,12 +61,11 @@ def send_item_to_subscribers(page: str, item: sslv.Item):
     for chat_id in chats:
         if page not in data[chat_id]["paths"]:
             continue
-        if not data[chat_id]["paths"][page]["price_max"] == 0:
-            try:
-                if item.price < data[chat_id]["paths"][page]["price_min"] or (data[chat_id]["paths"][page]["price_max"] != 0 and item.price > data[chat_id]["paths"][page]["price_max"]):
-                    continue
-            except Exception:
-                pass
+        try:
+            if not item.price or item.price < data[chat_id]["paths"][page]["price_min"] or (data[chat_id]["paths"][page]["price_max"] != 0 and item.price > data[chat_id]["paths"][page]["price_max"]):
+                continue
+        except Exception:
+            pass
         try:
             if image_url:
                 bot.send_photo(chat_id, image_url, caption=text)
